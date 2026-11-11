@@ -287,3 +287,252 @@
             },
             {
                 prompt: "Which plan allows ZERO operational discretion and strictly dictates what must or must not be done?",
+                options: ["Policy", "Procedure", "Rule", "Strategy"],
+                correct: 2
+            },
+            {
+                prompt: "Standing plans designed to guide managerial thinking and decision-making boundaries are called:",
+                options: ["Budgets", "Policies", "Programs", "Schedules"],
+                correct: 1
+            },
+            {
+                prompt: "Plans expressed in quantitative numerical or financial units are known as:",
+                options: ["Rules", "Budgets", "Missions", "Policies"],
+                correct: 1
+            }
+        ];
+
+        class QuizApplication {
+            constructor() {
+                this.currentQuestionIndex = 0;
+                this.userAnswers = {}; 
+                this.timerInterval = null;
+                this.secondsRemaining = 15 * 60;
+            }
+
+            switchView(viewId) {
+                document.querySelectorAll('.view-panel').forEach(el => el.classList.add('hidden'));
+                document.getElementById(viewId).classList.remove('hidden');
+                window.scrollTo(0, 0);
+            }
+
+            startQuiz() {
+                this.currentQuestionIndex = 0;
+                this.userAnswers = {};
+                this.secondsRemaining = 15 * 60;
+
+                this.switchView('view-quiz');
+                this.renderQuestion();
+                this.renderPalette();
+                this.startTimer();
+            }
+
+            startTimer() {
+                clearInterval(this.timerInterval);
+                this.updateTimerDisplay();
+
+                this.timerInterval = setInterval(() => {
+                    this.secondsRemaining--;
+                    this.updateTimerDisplay();
+
+                    if (this.secondsRemaining <= 0) {
+                        clearInterval(this.timerInterval);
+                        alert("Time limit reached! Submitting your answers automatically.");
+                        this.finalizeQuiz();
+                    }
+                }, 1000);
+            }
+
+            updateTimerDisplay() {
+                const mins = Math.floor(this.secondsRemaining / 60);
+                const secs = this.secondsRemaining % 60;
+                document.getElementById('timer-display').textContent = 
+                    `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+            }
+
+            renderQuestion() {
+                const q = questionBank[this.currentQuestionIndex];
+                const total = questionBank.length;
+
+                document.getElementById('quiz-progress-text').textContent = `Question ${this.currentQuestionIndex + 1} of ${total}`;
+                document.getElementById('q-badge').textContent = `Question ${this.currentQuestionIndex + 1}`;
+                document.getElementById('q-text').textContent = q.prompt;
+
+                const optionsContainer = document.getElementById('options-container');
+                optionsContainer.innerHTML = '';
+
+                const labels = ['A', 'B', 'C', 'D'];
+                q.options.forEach((optText, idx) => {
+                    const isSelected = this.userAnswers[this.currentQuestionIndex] === idx;
+                    const optBtn = document.createElement('div');
+                    optBtn.onclick = () => this.selectOption(idx);
+                    optBtn.className = `p-4 rounded-xl border cursor-pointer transition flex items-center gap-3 ${
+                        isSelected 
+                            ? 'border-indigo-600 bg-indigo-50/60 text-indigo-950 font-semibold ring-1 ring-indigo-600' 
+                            : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-700'
+                    }`;
+
+                    optBtn.innerHTML = `
+                        <div class="w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs ${
+                            isSelected ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-600'
+                        }">${labels[idx]}</div>
+                        <div class="text-sm flex-1">${optText}</div>
+                    `;
+                    optionsContainer.appendChild(optBtn);
+                });
+
+                document.getElementById('btn-prev').disabled = (this.currentQuestionIndex === 0);
+                document.getElementById('btn-prev').style.opacity = (this.currentQuestionIndex === 0) ? '0.5' : '1';
+
+                const nextBtn = document.getElementById('btn-next');
+                if (this.currentQuestionIndex === total - 1) {
+                    nextBtn.innerHTML = `Finish & Submit <i class="fa-solid fa-check-double ml-1"></i>`;
+                } else {
+                    nextBtn.innerHTML = `Next <i class="fa-solid fa-chevron-right ml-1"></i>`;
+                }
+            }
+
+            selectOption(optIdx) {
+                this.userAnswers[this.currentQuestionIndex] = optIdx;
+                this.renderQuestion();
+                this.renderPalette();
+            }
+
+            nextQuestion() {
+                if (this.currentQuestionIndex < questionBank.length - 1) {
+                    this.currentQuestionIndex++;
+                    this.renderQuestion();
+                    this.renderPalette();
+                } else {
+                    this.confirmSubmit();
+                }
+            }
+
+            prevQuestion() {
+                if (this.currentQuestionIndex > 0) {
+                    this.currentQuestionIndex--;
+                    this.renderQuestion();
+                    this.renderPalette();
+                }
+            }
+
+            renderPalette() {
+                const grid = document.getElementById('palette-grid');
+                grid.innerHTML = '';
+
+                questionBank.forEach((q, idx) => {
+                    const isCurrent = (idx === this.currentQuestionIndex);
+                    const isAnswered = this.userAnswers.hasOwnProperty(idx);
+
+                    let bgColor = isAnswered ? "bg-emerald-500 text-white font-bold" : "bg-slate-100 text-slate-700 hover:bg-slate-200";
+
+                    const btn = document.createElement('button');
+                    btn.className = `h-9 rounded-lg text-xs font-semibold flex items-center justify-center transition ${bgColor} ${
+                        isCurrent ? 'ring-2 ring-indigo-600 ring-offset-1' : ''
+                    }`;
+                    btn.textContent = idx + 1;
+                    btn.onclick = () => {
+                        this.currentQuestionIndex = idx;
+                        this.renderQuestion();
+                        this.renderPalette();
+                    };
+                    grid.appendChild(btn);
+                });
+            }
+
+            confirmSubmit() {
+                const answered = Object.keys(this.userAnswers).length;
+                const total = questionBank.length;
+                if (confirm(`You have answered ${answered} of ${total} questions. Are you sure you want to submit?`)) {
+                    this.finalizeQuiz();
+                }
+            }
+
+            finalizeQuiz() {
+                clearInterval(this.timerInterval);
+
+                let correctCount = 0;
+                questionBank.forEach((q, idx) => {
+                    if (this.userAnswers[idx] === q.correct) {
+                        correctCount++;
+                    }
+                });
+
+                const total = questionBank.length;
+                const pct = Math.round((correctCount / total) * 100);
+
+                document.getElementById('res-score').textContent = `${correctCount}/${total}`;
+                document.getElementById('res-pct').textContent = `${pct}%`;
+                document.getElementById('res-correct').textContent = correctCount;
+                document.getElementById('res-incorrect').textContent = total - correctCount;
+
+                // Render Answers & Correct Choice Breakdown Key
+                const reviewContainer = document.getElementById('answer-review-container');
+                reviewContainer.innerHTML = '';
+
+                const labels = ['A', 'B', 'C', 'D'];
+
+                questionBank.forEach((q, idx) => {
+                    const userSelected = this.userAnswers[idx];
+                    const isCorrect = userSelected === q.correct;
+                    const isUnanswered = userSelected === undefined;
+
+                    const card = document.createElement('div');
+                    card.className = `p-5 rounded-xl border ${
+                        isCorrect 
+                            ? 'bg-emerald-50/40 border-emerald-200' 
+                            : 'bg-rose-50/40 border-rose-200'
+                    } space-y-3`;
+
+                    let statusBadge = isCorrect 
+                        ? `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800"><i class="fa-solid fa-check mr-1"></i> Correct</span>`
+                        : (isUnanswered 
+                            ? `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-200 text-slate-700"><i class="fa-solid fa-minus mr-1"></i> Unanswered</span>`
+                            : `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-800"><i class="fa-solid fa-xmark mr-1"></i> Incorrect</span>`);
+
+                    let optionsHtml = q.options.map((opt, oIdx) => {
+                        let optStyle = "bg-white border-slate-200 text-slate-700";
+                        let optIcon = "";
+
+                        if (oIdx === q.correct) {
+                            optStyle = "bg-emerald-100 border-emerald-300 text-emerald-900 font-semibold";
+                            optIcon = `<span class="ml-auto text-xs font-bold text-emerald-700"><i class="fa-solid fa-circle-check"></i> Correct Answer</span>`;
+                        } else if (oIdx === userSelected && !isCorrect) {
+                            optStyle = "bg-rose-100 border-rose-300 text-rose-900 font-semibold";
+                            optIcon = `<span class="ml-auto text-xs font-bold text-rose-700"><i class="fa-solid fa-circle-xmark"></i> Your Choice</span>`;
+                        }
+
+                        return `
+                            <div class="p-3 rounded-lg border text-xs flex items-center gap-2 ${optStyle}">
+                                <span class="font-bold w-4">${labels[oIdx]}.</span>
+                                <span class="flex-1">${opt}</span>
+                                ${optIcon}
+                            </div>
+                        `;
+                    }).join('');
+
+                    card.innerHTML = `
+                        <div class="flex justify-between items-start gap-2">
+                            <h4 class="text-sm font-bold text-slate-800">Q${idx + 1}. ${q.prompt}</h4>
+                            ${statusBadge}
+                        </div>
+                        <div class="space-y-1.5 pt-1">
+                            ${optionsHtml}
+                        </div>
+                    `;
+
+                    reviewContainer.appendChild(card);
+                });
+
+                this.switchView('view-result');
+            }
+
+            restartQuiz() {
+                this.switchView('view-start');
+            }
+        }
+
+        const quizApp = new QuizApplication();
+    </script>
+</body>
+</html>
