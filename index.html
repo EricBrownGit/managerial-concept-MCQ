@@ -8,8 +8,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Mammoth.js for parsing Word .docx files in browser -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
     <style>
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
@@ -40,22 +38,13 @@
     <!-- Main Container -->
     <main class="flex-1 max-w-6xl w-full mx-auto px-4 py-6">
 
-        <!-- VIEW 1: Set Selection & Word Doc Upload Hub -->
+        <!-- VIEW 1: Set Selection Hub -->
         <div id="view-hub" class="view-panel space-y-6">
-            <div class="bg-gradient-to-r from-indigo-600 to-blue-700 rounded-2xl p-8 text-white shadow-lg text-center md:text-left md:flex justify-between items-center">
-                <div>
-                    <h2 class="text-3xl font-extrabold mb-2">Management Concepts & Principles</h2>
-                    <p class="text-indigo-100 max-w-xl text-sm leading-relaxed">
-                        Choose from 10 pre-loaded sets (200 MCQs) or upload your own Word Document (.docx) file directly to generate an instant interactive assessment.
-                    </p>
-                </div>
-                <div class="mt-4 md:mt-0 bg-white/10 backdrop-blur-md px-5 py-3 rounded-xl border border-white/20 text-center">
-                    <span class="block text-xs uppercase tracking-wider text-indigo-200">Quick Upload</span>
-                    <label class="mt-2 inline-block bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold text-xs px-4 py-2 rounded-lg cursor-pointer shadow transition">
-                        <i class="fa-solid fa-file-word mr-1"></i> Upload Word Doc
-                        <input type="file" id="word-file-input" accept=".docx" class="hidden" onchange="quizApp.handleFileUpload(event)">
-                    </label>
-                </div>
+            <div class="bg-gradient-to-r from-indigo-600 to-blue-700 rounded-2xl p-8 text-white shadow-lg">
+                <h2 class="text-3xl font-extrabold mb-2">Management Concepts & Principles</h2>
+                <p class="text-indigo-100 max-w-2xl text-sm leading-relaxed">
+                    Choose from 10 pre-loaded comprehensive assessment sets (200 total MCQs) covering core managerial concepts, frameworks, and theories.
+                </p>
             </div>
 
             <div class="flex justify-between items-center pt-2">
@@ -141,7 +130,7 @@
             </div>
         </div>
 
-        <!-- VIEW 3: Score & Complete Correct Choice Breakdown -->
+        <!-- VIEW 3: Score & Correct Choice Breakdown -->
         <div id="view-result" class="view-panel hidden max-w-3xl mx-auto space-y-6">
             <!-- Score Card -->
             <div class="bg-white rounded-2xl border border-slate-200 shadow-xl overflow-hidden">
@@ -511,55 +500,6 @@
                 clearInterval(this.timerInterval);
                 this.switchView('view-hub');
                 this.renderSetHub();
-            }
-
-            handleFileUpload(event) {
-                const file = event.target.files[0];
-                if (!file) return;
-
-                const reader = new FileReader();
-                reader.onload = async (e) => {
-                    const arrayBuffer = e.target.result;
-                    try {
-                        const result = await mammoth.extractRawText({ arrayBuffer: arrayBuffer });
-                        const text = result.value;
-                        
-                        // Basic parser for uploaded text
-                        const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-                        let questions = [];
-                        
-                        // Simple robust parser fallback: groups lines into a question block
-                        let currentQ = { prompt: "Custom Uploaded Question", options: ["Option A", "Option B", "Option C", "Option D"], correct: 0 };
-                        
-                        for (let i = 0; i < lines.length; i++) {
-                            if (lines[i].match(/^\d+\./)) {
-                                if (questions.length > 0 && questions.length < 20) {
-                                    // push previous
-                                }
-                                currentQ = { prompt: lines[i].replace(/^\d+\.\s*/, ''), options: ["Option 1", "Option 2", "Option 3", "Option 4"], correct: 0 };
-                                questions.push(currentQ);
-                            }
-                        }
-
-                        if (questions.length === 0) {
-                            // Fallback dummy if text format is unstructured
-                            questions.push({ prompt: "Sample question from uploaded document: " + text.substring(0, 80) + "...", options: ["True", "False", "Not Specified", "None"], correct: 0 });
-                        }
-
-                        allSetsData.push({
-                            setId: allSetsData.length + 1,
-                            title: file.name.replace('.docx', ''),
-                            questions: questions.slice(0, 20)
-                        });
-
-                        alert("Successfully uploaded and parsed '" + file.name + "' as Set " + allSetsData.length + "!");
-                        this.renderSetHub();
-                    } catch (err) {
-                        alert("Error parsing Word document. Please ensure it is a valid .docx file.");
-                        console.log(err);
-                    }
-                };
-                reader.readAsArrayBuffer(file);
             }
 
             startSet(setIdx) {
