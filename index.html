@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Management Concepts & Principles Assessment (Set 1)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-indigo-700 text-white shadow-md sticky top-0 z-40">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <i class="fa-solid fa-graduation-cap text-2xl text-amber-300"></i>
+                <h1 class="text-xl font-bold tracking-tight">AssessPro Quiz Platform</h1>
+            </div>
+            <span class="text-xs bg-indigo-800 text-indigo-100 px-3 py-1 rounded-full font-medium">
+                <i class="fa-solid fa-user-shield text-amber-300 mr-1"></i> Anonymous & Zero Data Stored
+            </span>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 max-w-5xl w-full mx-auto px-4 py-6">
+
+        <!-- VIEW 1: Quiz Welcome Screen -->
+        <div id="view-start" class="view-panel max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8 border border-slate-100 text-center space-y-6">
+            <div class="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto text-3xl">
+                <i class="fa-solid fa-clipboard-question"></i>
+            </div>
+            <div>
+                <h2 class="text-3xl font-extrabold text-slate-800">Management Concepts & Principles</h2>
+                <p class="text-slate-500 mt-2 text-sm leading-relaxed">
+                    Based on official course question banks[cite: 204]. Test your knowledge on managerial functions, decision-making, and organizational behavior.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4 text-center bg-slate-50 p-4 rounded-xl border border-slate-100 text-xs text-slate-600">
+                <div>
+                    <span class="block text-slate-400 font-medium uppercase">Questions</span>
+                    <strong class="text-base text-slate-800">20 MCQs[cite: 204]</strong>
+                </div>
+                <div>
+                    <span class="block text-slate-400 font-medium uppercase">Duration</span>
+                    <strong class="text-base text-slate-800">15 Mins</strong>
+                </div>
+                <div>
+                    <span class="block text-slate-400 font-medium uppercase">Privacy</span>
+                    <strong class="text-base text-emerald-600 font-bold">100% Anonymous</strong>
+                </div>
+            </div>
+
+            <div class="bg-amber-50 border border-amber-200 rounded-lg p-3 text-left text-xs text-amber-800 flex items-start gap-2">
+                <i class="fa-solid fa-shield-halved text-amber-600 mt-0.5 text-sm"></i>
+                <div>
+                    <strong>Instant Review:</strong> No personal details are collected. Your score and the correct answer key breakdown will be shown immediately at the end.
+                </div>
+            </div>
+
+            <button onclick="quizApp.startQuiz()" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-lg hover:shadow-indigo-200 transition text-base">
+                Start Assessment <i class="fa-solid fa-arrow-right ml-2"></i>
+            </button>
+        </div>
+
+        <!-- VIEW 2: Quiz Execution Screen -->
+        <div id="view-quiz" class="view-panel hidden space-y-4">
+            <!-- Header Status Bar -->
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-wrap justify-between items-center gap-4 sticky top-16 z-30">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-800">Management Concepts Assessment</h2>
+                    <p class="text-xs text-slate-500">Progress: <span id="quiz-progress-text" class="font-medium text-slate-700">Question 1 of 20</span></p>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center text-rose-600 font-mono font-bold text-xl bg-rose-50 px-4 py-1.5 rounded-lg border border-rose-200">
+                        <i class="fa-regular fa-clock mr-2 animate-pulse"></i>
+                        <span id="timer-display">15:00</span>
+                    </div>
+                    <button onclick="quizApp.confirmSubmit()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2 rounded-lg font-semibold shadow-sm transition text-sm">
+                        Submit Quiz
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                <!-- Question Main Container -->
+                <div class="lg:col-span-3">
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 space-y-6">
+                        <div class="flex justify-between items-center pb-3 border-b border-slate-100">
+                            <span id="q-badge" class="px-3 py-1 bg-indigo-50 text-indigo-700 font-bold rounded-md text-xs">Question 1</span>
+                        </div>
+
+                        <!-- Question Prompt -->
+                        <div id="q-text" class="text-lg font-medium text-slate-800 leading-relaxed">
+                            Loading question...
+                        </div>
+
+                        <!-- Options Grid -->
+                        <div id="options-container" class="space-y-3 pt-2">
+                            <!-- Options rendered dynamically -->
+                        </div>
+
+                        <!-- Navigation Bar -->
+                        <div class="pt-6 border-t border-slate-100 flex justify-between items-center">
+                            <button id="btn-prev" onclick="quizApp.prevQuestion()" class="px-5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-lg text-sm transition">
+                                <i class="fa-solid fa-chevron-left mr-1"></i> Previous
+                            </button>
+                            <button id="btn-next" onclick="quizApp.nextQuestion()" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg text-sm shadow-sm transition">
+                                Next <i class="fa-solid fa-chevron-right ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Palette -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4 space-y-4">
+                        <h3 class="font-bold text-slate-800 text-xs tracking-wide uppercase border-b pb-2 border-slate-100">Question Palette</h3>
+                        <div id="palette-grid" class="grid grid-cols-5 gap-2 max-h-80 overflow-y-auto custom-scrollbar p-1">
+                            <!-- Palette buttons -->
+                        </div>
+                        <div class="pt-3 border-t border-slate-100 text-xs space-y-2">
+                            <div class="flex items-center gap-2">
+                                <span class="w-3.5 h-3.5 rounded bg-emerald-500 inline-block"></span> Answered
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-3.5 h-3.5 rounded bg-slate-200 inline-block"></span> Unanswered
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-3.5 h-3.5 rounded border-2 border-indigo-600 inline-block"></span> Current
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 3: Score & Complete Correct Choice Breakdown -->
+        <div id="view-result" class="view-panel hidden max-w-3xl mx-auto space-y-6">
+            <!-- Score Card -->
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-xl overflow-hidden">
+                <div id="result-banner" class="p-8 text-center text-white bg-indigo-600">
+                    <h2 class="text-3xl font-extrabold mb-1">Assessment Complete</h2>
+                    <p class="text-indigo-100 text-sm">Your score and correct answers key are displayed below.</p>
+                </div>
+
+                <div class="p-8 space-y-6">
+                    <!-- Metrics Summary -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                        <div class="p-4 bg-slate-50 border border-slate-100 rounded-xl">
+                            <p class="text-xs text-slate-500 font-semibold uppercase">Total Score</p>
+                            <p id="res-score" class="text-2xl font-black text-indigo-600 mt-1">0/20</p>
+                        </div>
+                        <div class="p-4 bg-slate-50 border border-slate-100 rounded-xl">
+                            <p class="text-xs text-slate-500 font-semibold uppercase">Percentage</p>
+                            <p id="res-pct" class="text-2xl font-black text-slate-800 mt-1">0%</p>
+                        </div>
+                        <div class="p-4 bg-slate-50 border border-slate-100 rounded-xl">
+                            <p class="text-xs text-slate-500 font-semibold uppercase">Correct Answers</p>
+                            <p id="res-correct" class="text-2xl font-black text-emerald-600 mt-1">0</p>
+                        </div>
+                        <div class="p-4 bg-slate-50 border border-slate-100 rounded-xl">
+                            <p class="text-xs text-slate-500 font-semibold uppercase">Incorrect / Missed</p>
+                            <p id="res-incorrect" class="text-2xl font-black text-rose-600 mt-1">0</p>
+                        </div>
+                    </div>
+
+                    <!-- Answer Key & Detailed Breakdown Section -->
+                    <div class="pt-4 border-t border-slate-200 space-y-4">
+                        <h3 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-list-check text-indigo-600"></i> Review & Correct Answers Key
+                        </h3>
+                        <p class="text-xs text-slate-500">Compare your selected choices with the official correct answer key from the document[cite: 204].</p>
+
+                        <div id="answer-review-container" class="space-y-4">
+                            <!-- Answer breakdown populated dynamically -->
+                        </div>
+                    </div>
+
+                    <div class="text-center pt-4">
+                        <button onclick="quizApp.restartQuiz()" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-md transition">
+                            <i class="fa-solid fa-rotate-right mr-2"></i> Retake Quiz
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Quiz Logic Script -->
+    <script>
+        const questionBank = [
+            {
+                prompt: "Who defined management as 'the art of getting things done through people'?",
+                options: ["James A.F. Stoner", "Mary Parker Follett", "Peter Drucker", "Henri Fayol"],
+                correct: 1
+            },
+            {
+                prompt: "According to James A.F. Stoner, management is the process of planning, organizing, leading, and controlling to achieve:",
+                options: ["Personal wealth", "Maximum production output", "Stated organizational goals", "Government mandates"],
+                correct: 2
+            },
+            {
+                prompt: "The practice of management dates back to:",
+                options: ["The Industrial Revolution", "Ancient civilizations like the Egyptian Pyramids and Indus Valley", "The 20th century information age", "The invention of the steam engine"],
+                correct: 1
+            },
+            {
+                prompt: "Why is management considered an 'inexact science'?",
+                options: ["It lacks any systematic body of knowledge", "It deals with dynamic human behavior and unpredictable environments", "It is purely based on trial and error", "It has no established principles"],
+                correct: 1
+            },
+            {
+                prompt: "Which of the following best describes top-level management?",
+                options: ["Foremen and supervisors", "Departmental and branch managers", "Board of Directors, CEO, and Managing Director", "Operational floor workers"],
+                correct: 2
+            },
+            {
+                prompt: "Which skill is most critical at the lower (supervisory) level of management?",
+                options: ["Conceptual skills", "Human skills", "Technical skills", "Strategic skills"],
+                correct: 2
+            },
+            {
+                prompt: "As a manager moves up the hierarchy from supervisory to top management, the need for which skill increases the most?",
+                options: ["Technical skills", "Conceptual skills", "Mechanical skills", "Accounting skills"],
+                correct: 1
+            },
+            {
+                prompt: "Which skill remains vital and equally important across all levels of management?",
+                options: ["Technical skills", "Human (Interpersonal) skills", "Financial skills", "IT skills"],
+                correct: 1
+            },
+            {
+                prompt: "Management functions are broadly categorized into how many core activities?",
+                options: ["Three", "Five", "Seven", "Ten"],
+                correct: 1
+            },
+            {
+                prompt: "The function of management that involves establishing authority-responsibility relationships is:",
+                options: ["Planning", "Directing", "Organizing", "Controlling"],
+                correct: 2
+            },
+            {
+                prompt: "Controlling is often described as the 'Siamese twin' of which management function?",
+                options: ["Staffing", "Planning", "Directing", "Organizing"],
+                correct: 1
+            },
+            {
+                prompt: "Which group represents a major internal/external stakeholder to whom a business owes social responsibility?",
+                options: ["Customers", "Employees", "Shareholders", "All of the above"],
+                correct: 3
+            },
+            {
+                prompt: "Milton Friedman strongly argued that the primary responsibility of business is to:",
+                options: ["Solve societal poverty", "Maximize economic profits within legal rules", "Provide free healthcare", "Eliminate environmental risks"],
+                correct: 1
+            },
+            {
+                prompt: "Which environmental force consists of competitors, suppliers, laws, and customers?",
+                options: ["Indirect action environment", "Direct action environment", "Global macro environment", "Internal cultural environment"],
+                correct: 1
+            },
+            {
+                prompt: "Socio-cultural forces in the business environment include:",
+                options: ["GDP and interest rates", "Values, beliefs, customs, and demographic shifts", "Taxation policies", "Automation technology"],
+                correct: 1
+            },
+            {
+                prompt: "Planning is primarily concerned with:",
+                options: ["Evaluating past failures", "Looking ahead and outlining a future course of action", "Punishing non-performing workers", "Drafting annual tax files"],
+                correct: 1
+            },
+            {
+                prompt: "Strategic planning covers a time horizon of:",
+                options: ["1 to 3 months", "6 months", "5 to 10+ years", "Exactly 1 year"],
+                correct: 2
+            },
+            {
+                prompt: "Which plan allows ZERO operational discretion and strictly dictates what must or must not be done?",
