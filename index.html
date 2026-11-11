@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Management Concepts & Principles Assessment (Set 1)</title>
+    <title>Management Concepts & Principles - 200 MCQs Assessment Platform</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
@@ -18,58 +18,50 @@
 <body class="bg-slate-50 font-sans text-slate-800 min-h-screen flex flex-col">
 
     <!-- Header -->
-    <header class="bg-indigo-700 text-white shadow-md sticky top-0 z-40">
-        <div class="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center space-x-3">
+    <header class="bg-indigo-700 text-white shadow-md sticky top-0 z-45">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="quizApp.goHome()">
                 <i class="fa-solid fa-graduation-cap text-2xl text-amber-300"></i>
-                <h1 class="text-xl font-bold tracking-tight">AssessPro Quiz Platform</h1>
+                <h1 class="text-xl font-bold tracking-tight">AssessPro 200 MCQ Hub</h1>
             </div>
-            <span class="text-xs bg-indigo-800 text-indigo-100 px-3 py-1 rounded-full font-medium">
-                <i class="fa-solid fa-user-shield text-amber-300 mr-1"></i> Anonymous & Zero Data Stored
-            </span>
+            <div class="flex items-center gap-3">
+                <span class="text-xs bg-indigo-800 text-indigo-100 px-3 py-1 rounded-full font-medium hidden sm:inline-block">
+                    <i class="fa-solid fa-user-shield text-amber-300 mr-1"></i> 100% Anonymous & Zero Data Stored
+                </span>
+                <button onclick="quizApp.goHome()" id="home-nav-btn" class="hidden bg-indigo-600 hover:bg-indigo-800 text-white text-xs px-3 py-1.5 rounded-lg font-semibold transition">
+                    <i class="fa-solid fa-house mr-1"></i> Switch Set
+                </button>
+            </div>
         </div>
     </header>
 
     <!-- Main Container -->
-    <main class="flex-1 max-w-5xl w-full mx-auto px-4 py-6">
+    <main class="flex-1 max-w-6xl w-full mx-auto px-4 py-6">
 
-        <!-- VIEW 1: Quiz Welcome Screen -->
-        <div id="view-start" class="view-panel max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8 border border-slate-100 text-center space-y-6">
-            <div class="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto text-3xl">
-                <i class="fa-solid fa-clipboard-question"></i>
-            </div>
-            <div>
-                <h2 class="text-3xl font-extrabold text-slate-800">Management Concepts & Principles</h2>
-                <p class="text-slate-500 mt-2 text-sm leading-relaxed">
-                    Based on official course question banks[cite: 204]. Test your knowledge on managerial functions, decision-making, and organizational behavior.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-3 gap-4 text-center bg-slate-50 p-4 rounded-xl border border-slate-100 text-xs text-slate-600">
+        <!-- VIEW 1: Set Selection Hub -->
+        <div id="view-hub" class="view-panel space-y-6">
+            <div class="bg-gradient-to-r from-indigo-600 to-blue-700 rounded-2xl p-8 text-white shadow-lg text-center md:text-left md:flex justify-between items-center">
                 <div>
-                    <span class="block text-slate-400 font-medium uppercase">Questions</span>
-                    <strong class="text-base text-slate-800">20 MCQs[cite: 204]</strong>
+                    <h2 class="text-3xl font-extrabold mb-2">Management Concepts & Principles</h2>
+                    <p class="text-indigo-100 max-w-xl text-sm leading-relaxed">
+                        Complete multiple-choice question bank across 10 sets (20 questions each, totaling 200 MCQs) with correct answers highlighted upon submission. No login or data storage required.
+                    </p>
                 </div>
-                <div>
-                    <span class="block text-slate-400 font-medium uppercase">Duration</span>
-                    <strong class="text-base text-slate-800">15 Mins</strong>
-                </div>
-                <div>
-                    <span class="block text-slate-400 font-medium uppercase">Privacy</span>
-                    <strong class="text-base text-emerald-600 font-bold">100% Anonymous</strong>
+                <div class="mt-4 md:mt-0 bg-white/10 backdrop-blur-md px-5 py-3 rounded-xl border border-white/20 text-center">
+                    <span class="block text-xs uppercase tracking-wider text-indigo-200">Total Question Bank</span>
+                    <strong class="text-2xl font-black text-amber-300">200 MCQs</strong>
                 </div>
             </div>
 
-            <div class="bg-amber-50 border border-amber-200 rounded-lg p-3 text-left text-xs text-amber-800 flex items-start gap-2">
-                <i class="fa-solid fa-shield-halved text-amber-600 mt-0.5 text-sm"></i>
-                <div>
-                    <strong>Instant Review:</strong> No personal details are collected. Your score and the correct answer key breakdown will be shown immediately at the end.
-                </div>
+            <div class="flex justify-between items-center pt-2">
+                <h3 class="text-xl font-bold text-slate-800">Select Assessment Set</h3>
+                <span class="text-sm font-medium text-slate-500">10 Sets Available (20 MCQs Each)</span>
             </div>
 
-            <button onclick="quizApp.startQuiz()" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-lg hover:shadow-indigo-200 transition text-base">
-                Start Assessment <i class="fa-solid fa-arrow-right ml-2"></i>
-            </button>
+            <!-- Sets Grid -->
+            <div id="sets-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                <!-- Dynamically populated set cards -->
+            </div>
         </div>
 
         <!-- VIEW 2: Quiz Execution Screen -->
@@ -77,16 +69,16 @@
             <!-- Header Status Bar -->
             <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-wrap justify-between items-center gap-4 sticky top-16 z-30">
                 <div>
-                    <h2 class="text-lg font-bold text-slate-800">Management Concepts Assessment</h2>
+                    <h2 id="active-set-title" class="text-lg font-bold text-slate-800">Set Title</h2>
                     <p class="text-xs text-slate-500">Progress: <span id="quiz-progress-text" class="font-medium text-slate-700">Question 1 of 20</span></p>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <div class="flex items-center text-rose-600 font-mono font-bold text-xl bg-rose-50 px-4 py-1.5 rounded-lg border border-rose-200">
+                    <div class="flex items-center text-rose-600 font-mono font-bold text-lg bg-rose-50 px-3 py-1.5 rounded-lg border border-rose-200">
                         <i class="fa-regular fa-clock mr-2 animate-pulse"></i>
                         <span id="timer-display">15:00</span>
                     </div>
-                    <button onclick="quizApp.confirmSubmit()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2 rounded-lg font-semibold shadow-sm transition text-sm">
-                        Submit Quiz
+                    <button onclick="quizApp.confirmSubmit()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-semibold shadow-sm transition text-sm">
+                        Submit Set
                     </button>
                 </div>
             </div>
@@ -148,9 +140,9 @@
         <div id="view-result" class="view-panel hidden max-w-3xl mx-auto space-y-6">
             <!-- Score Card -->
             <div class="bg-white rounded-2xl border border-slate-200 shadow-xl overflow-hidden">
-                <div id="result-banner" class="p-8 text-center text-white bg-indigo-600">
-                    <h2 class="text-3xl font-extrabold mb-1">Assessment Complete</h2>
-                    <p class="text-indigo-100 text-sm">Your score and correct answers key are displayed below.</p>
+                <div class="p-8 text-center text-white bg-indigo-600">
+                    <h2 id="result-title" class="text-3xl font-extrabold mb-1">Set Completed</h2>
+                    <p class="text-indigo-100 text-sm">Your answers and the official correct answer key are displayed below.</p>
                 </div>
 
                 <div class="p-8 space-y-6">
@@ -179,16 +171,19 @@
                         <h3 class="text-xl font-bold text-slate-800 flex items-center gap-2">
                             <i class="fa-solid fa-list-check text-indigo-600"></i> Review & Correct Answers Key
                         </h3>
-                        <p class="text-xs text-slate-500">Compare your selected choices with the official correct answer key from the document[cite: 204].</p>
+                        <p class="text-xs text-slate-500">Compare your selected choices with the correct answer keys from the document.</p>
 
                         <div id="answer-review-container" class="space-y-4">
                             <!-- Answer breakdown populated dynamically -->
                         </div>
                     </div>
 
-                    <div class="text-center pt-4">
-                        <button onclick="quizApp.restartQuiz()" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-md transition">
-                            <i class="fa-solid fa-rotate-right mr-2"></i> Retake Quiz
+                    <div class="flex gap-3 pt-4">
+                        <button onclick="quizApp.goHome()" class="w-1/2 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl transition">
+                            <i class="fa-solid fa-arrow-left mr-2"></i> Choose Another Set
+                        </button>
+                        <button onclick="quizApp.restartCurrentSet()" class="w-1/2 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-md transition">
+                            <i class="fa-solid fa-rotate-right mr-2"></i> Retake This Set
                         </button>
                     </div>
                 </div>
@@ -197,117 +192,279 @@
 
     </main>
 
-    <!-- Quiz Logic Script -->
+    <!-- Quiz Data & Logic Script -->
     <script>
-        const questionBank = [
+        const allSetsData = [
             {
-                prompt: "Who defined management as 'the art of getting things done through people'?",
-                options: ["James A.F. Stoner", "Mary Parker Follett", "Peter Drucker", "Henri Fayol"],
-                correct: 1
+                setId: 1,
+                title: "Set 1: Foundations & Planning",
+                questions: [
+                    { prompt: "Who defined management as 'the art of getting things done through people'?", options: ["James A.F. Stoner", "Mary Parker Follett", "Peter Drucker", "Henri Fayol"], correct: 1 },
+                    { prompt: "According to James A.F. Stoner, management is the process of planning, organizing, leading, and controlling to achieve:", options: ["Personal wealth", "Maximum production output", "Stated organizational goals", "Government mandates"], correct: 2 },
+                    { prompt: "The practice of management dates back to:", options: ["The Industrial Revolution", "Ancient civilizations like the Egyptian Pyramids and Indus Valley", "The 20th century information age", "The invention of the steam engine"], correct: 1 },
+                    { prompt: "Why is management considered an 'inexact science'?", options: ["It lacks any systematic body of knowledge", "It deals with dynamic human behavior and unpredictable environments", "It is purely based on trial and error", "It has no established principles"], correct: 1 },
+                    { prompt: "Which of the following best describes top-level management?", options: ["Foremen and supervisors", "Departmental and branch managers", "Board of Directors, CEO, and Managing Director", "Operational floor workers"], correct: 2 },
+                    { prompt: "Which skill is most critical at the lower (supervisory) level of management?", options: ["Conceptual skills", "Human skills", "Technical skills", "Strategic skills"], correct: 2 },
+                    { prompt: "As a manager moves up the hierarchy from supervisory to top management, the need for which skill increases the most?", options: ["Technical skills", "Conceptual skills", "Mechanical skills", "Accounting skills"], correct: 1 },
+                    { prompt: "Which skill remains vital and equally important across all levels of management?", options: ["Technical skills", "Human (Interpersonal) skills", "Financial skills", "IT skills"], correct: 1 },
+                    { prompt: "Management functions are broadly categorized into how many core activities?", options: ["Three", "Five", "Seven", "Ten"], correct: 1 },
+                    { prompt: "The function of management that involves establishing authority-responsibility relationships is:", options: ["Planning", "Directing", "Organizing", "Controlling"], correct: 2 },
+                    { prompt: "Controlling is often described as the 'Siamese twin' of which management function?", options: ["Staffing", "Planning", "Directing", "Organizing"], correct: 1 },
+                    { prompt: "Which group represents a major internal/external stakeholder to whom a business owes social responsibility?", options: ["Customers", "Employees", "Shareholders", "All of the above"], correct: 3 },
+                    { prompt: "Milton Friedman strongly argued that the primary responsibility of business is to:", options: ["Solve societal poverty", "Maximize economic profits within legal rules", "Provide free healthcare", "Eliminate environmental risks"], correct: 1 },
+                    { prompt: "Which environmental force consists of competitors, suppliers, laws, and customers?", options: ["Indirect action environment", "Direct action environment", "Global macro environment", "Internal cultural environment"], correct: 1 },
+                    { prompt: "Socio-cultural forces in the business environment include:", options: ["GDP and interest rates", "Values, beliefs, customs, and demographic shifts", "Taxation policies", "Automation technology"], correct: 1 },
+                    { prompt: "Planning is primarily concerned with:", options: ["Evaluating past failures", "Looking ahead and outlining a future course of action", "Punishing non-performing workers", "Drafting annual tax files"], correct: 1 },
+                    { prompt: "Strategic planning covers a time horizon of:", options: ["1 to 3 months", "6 months", "5 to 10+ years", "Exactly 1 year"], correct: 2 },
+                    { prompt: "Which plan allows ZERO operational discretion and strictly dictates what must or must not be done?", options: ["Policy", "Procedure", "Rule", "Strategy"], correct: 2 },
+                    { prompt: "Standing plans designed to guide managerial thinking and decision-making boundaries are called:", options: ["Budgets", "Policies", "Programs", "Schedules"], correct: 1 },
+                    { prompt: "Plans expressed in quantitative numerical or financial units are known as:", options: ["Rules", "Budgets", "Missions", "Policies"], correct: 1 }
+                ]
             },
             {
-                prompt: "According to James A.F. Stoner, management is the process of planning, organizing, leading, and controlling to achieve:",
-                options: ["Personal wealth", "Maximum production output", "Stated organizational goals", "Government mandates"],
-                correct: 2
+                setId: 2,
+                title: "Set 2: MBO & Decision Making",
+                questions: [
+                    { prompt: "Who popularized the concept of Management by Objectives (MBO) in 1954?", options: ["George Odiorne", "Peter Drucker", "Henri Fayol", "Max Weber"], correct: 1 },
+                    { prompt: "The first step in the MBO process is:", options: ["Performance appraisal", "Establishing overall organizational goals at the top", "Subordinate goal setting", "Resource allocation"], correct: 1 },
+                    { prompt: "A key advantage of Management by Objectives (MBO) is:", options: ["Elimination of all paperwork", "Alignment of individual/departmental goals with corporate objectives", "Removal of top management involvement", "Guaranteed short-term profits"], correct: 1 },
+                    { prompt: "Policies formulated actively by top management to guide key functional areas are called:", options: ["Appealed policies", "Originated policies", "Implied policies", "Externally imposed policies"], correct: 1 },
+                    { prompt: "Policies resulting from decisions made when lower managers refer unusual, non-precedented problems upward are:", options: ["Implied policies", "Appealed policies", "Originated policies", "Imposed policies"], correct: 1 },
+                    { prompt: "Unwritten policies inferred by employees by observing consistent actions of top management are:", options: ["Originated policies", "Implied policies", "Imposed policies", "Appealed policies"], correct: 1 },
+                    { prompt: "Decision-making is best defined as:", options: ["Following routine orders blindly", "The process of selecting a course of action from among alternatives", "Consulting external lawyers", "Delegating work down the line"], correct: 1 },
+                    { prompt: "Programmed decisions are designed to deal with:", options: ["Unique, non-routine strategic crises", "Structured, repetitive, and routine operational problems", "Major corporate mergers", "New product launches"], correct: 1 },
+                    { prompt: "Non-programmed decisions typically require high managerial:", options: ["Routine compliance", "Standard operating procedures", "Judgment, intuition, and creativity", "Mathematical rules"], correct: 2 },
+                    { prompt: "Who proposed the concept of 'bounded rationality' and 'satisficing' in decision-making?", options: ["Herbert Simon", "Elton Mayo", "F.W. Taylor", "Chester Barnard"], correct: 0 },
+                    { prompt: "Choosing an alternative that is 'good enough' rather than perfectly optimal is called:", options: ["Sub-optimizing", "Satisficing", "Maximizing", "Rationalizing"], correct: 1 },
+                    { prompt: "Tall organizational structures are characterized by:", options: ["Wide spans of control and few hierarchical levels", "Narrow spans of control and many hierarchical levels", "No clear chain of command", "Complete decentralization"], correct: 1 },
+                    { prompt: "Flat organizational structures are characterized by:", options: ["Wide spans of control and few management levels", "Narrow spans of control and tall hierarchies", "High administrative overhead costs", "Slow communication channels"], correct: 0 },
+                    { prompt: "The exact number of subordinates who report directly to a single manager is known as:", options: ["Chain of command", "Span of control", "Scalar chain", "Unity of direction"], correct: 1 },
+                    { prompt: "Classical management theorists like Lyndall Urwick advocated for:", options: ["Unlimited span of control", "Narrow, fixed spans of control", "Elimination of managers", "Flattest possible hierarchies"], correct: 1 },
+                    { prompt: "Modern management theory views the ideal span of control as:", options: ["Fixed at exactly 4 subordinates", "Contingent on situational factors like task complexity and capabilities", "Always exceeding 20 people", "Identical for all industries"], correct: 1 },
+                    { prompt: "Grouping activities on the basis of primary business activities (Production, Marketing, Finance) is:", options: ["Territorial departmentation", "Functional departmentation", "Matrix departmentation", "Customer departmentation"], correct: 1 },
+                    { prompt: "Territorial (Geographical) departmentation is especially useful when:", options: ["Operations are physically dispersed across different regions/countries", "A firm produces only one product locally", "All employees work in one building", "The business is a small startup"], correct: 0 },
+                    { prompt: "Delegation of authority involves assigning responsibility, granting authority, and creating:", options: ["Immunity", "Accountability", "Centralization", "Informal networks"], correct: 1 },
+                    { prompt: "Decentralization differs from delegation in that decentralization is:", options: ["A individual one-to-one task transfer", "An organization-wide philosophy of pushing decision-making down", "Temporary and informal", "Restricted to top management"], correct: 1 }
+                ]
             },
             {
-                prompt: "The practice of management dates back to:",
-                options: ["The Industrial Revolution", "Ancient civilizations like the Egyptian Pyramids and Indus Valley", "The 20th century information age", "The invention of the steam engine"],
-                correct: 1
+                setId: 3,
+                title: "Set 3: Authority, Structure & Communication",
+                questions: [
+                    { prompt: "Line authority represents the:", options: ["Advisory capacity of staff specialists", "Direct scalar chain of command from superior to subordinate", "External legal counsel authority", "Union bargaining power"], correct: 1 },
+                    { prompt: "Staff authority is primarily designed to:", options: ["Issue direct command orders to line workers", "Provide advice, expert counsel, and assistance to line managers", "Approve annual dividends", "Manage factory machinery"], correct: 1 },
+                    { prompt: "When a staff specialist must approve a decision before action can be taken, this authority is called:", options: ["Advisory authority", "Concurrent authority", "Functional authority", "Line authority"], correct: 1 },
+                    { prompt: "Functional authority permits a staff specialist to:", options: ["Exercise direct control over line activities within a narrow specialized area", "Override the CEO's decisions", "Manage all operational budgets", "Hire line subordinates without approval"], correct: 0 },
+                    { prompt: "A common cause of line-staff conflict is:", options: ["Staff feeling line managers ignore specialized advice", "Line managers feeling staff steal credit for successes", "Differences in perspective and background", "All of the above"], correct: 3 },
+                    { prompt: "Mechanistic organizational designs are best suited for:", options: ["Dynamic, highly uncertain environments", "Stable, predictable environments", "Creative tech startups", "Matrix project teams"], correct: 1 },
+                    { prompt: "Organic organizational designs are characterized by:", options: ["Rigid rules and formal chains of command", "Flexibility, informal communication, and horizontal teamwork", "Tall hierarchical pyramids", "Strict centralized control"], correct: 1 },
+                    { prompt: "Joan Woodward's research demonstrated that organization structure is heavily influenced by:", options: ["Technology of production", "Office furniture", "National traditions", "Advertising spend"], correct: 0 },
+                    { prompt: "Formal organization structures are characterized by:", options: ["Spontaneous friendships and social groupings", "Officially designated roles, rules, and reporting relationships", "Rumor propagation", "Unwritten traditions"], correct: 1 },
+                    { prompt: "Informal organizations emerge primarily to satisfy employees':", options: ["Legal obligations", "Social and psychological needs", "Tax obligations", "Formal job descriptions"], correct: 1 },
+                    { prompt: "The informal communication network within an organization is commonly called the:", options: ["Scalar chain", "Grapevine", "Formal channel", "Command line"], correct: 1 },
+                    { prompt: "Which of the following is an advantage of oral communication?", options: ["Provides a permanent legal record", "Allows immediate feedback and clarification", "Prevents all misunderstandings", "Ideal for detailed technical reports"], correct: 1 },
+                    { prompt: "Which of the following is a key advantage of written communication?", options: ["Instant verbal interaction", "Serves as a permanent record and reference", "Requires no drafting effort", "Zero transmission cost"], correct: 1 },
+                    { prompt: "The first step in the communication process is:", options: ["Encoding", "Sender developing an idea/intent", "Decoding", "Feedback"], correct: 1 },
+                    { prompt: "Translating a message into understandable symbols or words is known as:", options: ["Decoding", "Encoding", "Filtering", "Noise"], correct: 1 },
+                    { prompt: "The receiver's reaction sent back to the sender to verify message comprehension is:", options: ["Channeling", "Feedback", "Noise", "Encoding"], correct: 1 },
+                    { prompt: "Any disturbance that interferes with or distorts a message transmission is called:", options: ["Medium", "Noise", "Feedback", "Code"], correct: 1 },
+                    { prompt: "A psychological barrier to communication caused by pre-formed feelings or distrust is:", options: ["Physical distance", "Inattention / Emotional bias", "Static noise", "Bad phone signal"], correct: 1 },
+                    { prompt: "Creativity is defined as:", options: ["Strictly adhering to established routines", "Generating novel, unconventional ideas and connections", "Following administrative procedures", "Copying competitor prices"], correct: 1 },
+                    { prompt: "The stage in the creative process where the subconscious processes ideas while the individual relaxes is:", options: ["Preparation", "Incubation", "Illumination", "Verification"], correct: 1 }
+                ]
             },
             {
-                prompt: "Why is management considered an 'inexact science'?",
-                options: ["It lacks any systematic body of knowledge", "It deals with dynamic human behavior and unpredictable environments", "It is purely based on trial and error", "It has no established principles"],
-                correct: 1
+                setId: 4,
+                title: "Set 4: Innovation & Mintzberg Roles",
+                questions: [
+                    { prompt: "The sudden flash of insight where a creative solution emerges is called:", options: ["Incubation", "Illumination", "Verification", "Preparation"], correct: 1 },
+                    { prompt: "How does entrepreneurship primarily differ from routine managership?", options: ["Managership focuses on initiating dynamic venture creation and innovation", "Entrepreneurship focuses on venture initiation; managership on ongoing resource administration", "They are identical in all aspects", "Managers take all financial risks"], correct: 1 },
+                    { prompt: "Fostering entrepreneurial behavior within an existing corporate structure is called:", options: ["Extrapreneurship", "Intrapreneurship", "Bureaucracy", "Outsourcing"], correct: 1 },
+                    { prompt: "Japanese management practices are renowned for providing employees with:", options: ["Rapid vertical promotions", "Lifetime employment security", "Frequent layoffs", "Individual piece-rate incentives"], correct: 1 },
+                    { prompt: "The Japanese consensus-based decision-making system involving informal discussions is known as:", options: ["Kaizen", "Ringi system", "Kanban", "Keiretsu"], correct: 1 },
+                    { prompt: "Japanese management performance evaluations emphasize:", options: ["Short-term individual output", "Long-term traits, teamwork, loyalty, and cooperation", "Quarterly sales bonuses", "Isolated competitive targets"], correct: 1 },
+                    { prompt: "American management systems typically feature:", options: ["Collective decision-making and group accountability", "Individual decision-making and fast vertical progression", "Lifetime employment contracts", "Informal implicit controls"], correct: 1 },
+                    { prompt: "Workplace diversity refers to organizational differences across:", options: ["Age, gender, ethnicity, and background", "Only machinery brands", "Office building locations", "Software versions"], correct: 0 },
+                    { prompt: "A key organizational benefit of a diverse workforce is:", options: ["Elimination of all management layers", "Enhanced problem-solving capabilities and creative perspectives", "Reduced training budgets", "Automated decision making"], correct: 1 },
+                    { prompt: "Benchmarking is defined as:", options: ["Comparing current performance against past financial records only", "Measuring processes and services against best-in-class industry leaders", "Setting minimum legal standards", "Copying competitor trademarks"], correct: 1 },
+                    { prompt: "The first phase of the benchmarking process is:", options: ["Action plan implementation", "Planning (identifying what to benchmark and target firms)", "Recalibration", "Institutionalization"], correct: 1 },
+                    { prompt: "A common pitfall of benchmarking is:", options: ["Treating benchmarking as a one-time project rather than an ongoing process", "Involving frontline employees", "Focusing on best-in-class standards", "Analyzing internal processes"], correct: 0 },
+                    { prompt: "To overcome benchmarking pitfalls, management should:", options: ["Focus strictly on direct local competitors", "Treat benchmarking as a continuous learning cycle with employee involvement", "Avoid sharing data with benchmark partners", "Delegate it entirely to external consultants"], correct: 1 },
+                    { prompt: "Which of the following is considered a core management function according to Fayol and classical theorists?", options: ["Accounting", "Directing / Leading", "Investing", "Manufacturing"], correct: 1 },
+                    { prompt: "The managerial function that involves evaluating employee performance and taking corrective actions is:", options: ["Planning", "Controlling", "Organizing", "Delegating"], correct: 1 },
+                    { prompt: "A Chief Executive Officer (CEO) spending time negotiating a strategic alliance exhibits Mintzberg's role of:", options: ["Figurehead", "Negotiator", "Monitor", "Disseminator"], correct: 1 },
+                    { prompt: "According to Mintzberg, ceremonial duties like attending a ribbon-cutting fall under:", options: ["Decisional roles", "Interpersonal figurehead role", "Informational roles", "Technical roles"], correct: 1 },
+                    { prompt: "A manager scanning news reports and industry metrics operates in Mintzberg's role of:", options: ["Leader", "Monitor", "Resource Allocator", "Entrepreneur"], correct: 1 },
+                    { prompt: "In Mintzberg's framework, resolving an unexpected operational crisis or strike is the role of:", options: ["Spokesperson", "Disturbance Handler", "Liaison", "Figurehead"], correct: 1 },
+                    { prompt: "Deciding how corporate capital and manpower are distributed across project divisions is the role of:", options: ["Resource Allocator", "Monitor", "Liaison", "Disseminator"], correct: 0 }
+                ]
             },
             {
-                prompt: "Which of the following best describes top-level management?",
-                options: ["Foremen and supervisors", "Departmental and branch managers", "Board of Directors, CEO, and Managing Director", "Operational floor workers"],
-                correct: 2
+                setId: 5,
+                title: "Set 5: Social Responsibility & Decisions",
+                questions: [
+                    { prompt: "The concept of 'Social Responsibility of Business' implies that corporations owe duties to:", options: ["Shareholders only", "Society, environment, employees, customers, and shareholders", "Tax officers only", "Board members exclusively"], correct: 1 },
+                    { prompt: "Ethical marketing practices mandate avoiding:", options: ["Fair prices", "Misleading advertisements and false quality claims", "Product warranties", "Customer feedback channels"], correct: 1 },
+                    { prompt: "Which responsibility does a business have toward its suppliers/creditors?", options: ["Paying dividends", "Honoring timely payments and fair commercial terms", "Providing housing subsidies", "Filing corporate tax forms"], correct: 1 },
+                    { prompt: "Corporate compliance with anti-pollution laws and clean waste disposal fulfills responsibility toward:", options: ["Creditors", "Society and the environment", "Shareholders", "Competitors"], correct: 1 },
+                    { prompt: "Major legal acts affecting the Indian business environment include:", options: ["Companies Act and Factories Act", "Foreign Exchange Management Act (FEMA)", "Industrial Disputes Act", "All of the above"], correct: 3 },
+                    { prompt: "Economic indicators in the macro environment include:", options: ["National income, inflation rates, and consumer purchasing power", "Assembly line machinery", "Employee union rules", "Office lease contracts"], correct: 0 },
+                    { prompt: "Which planning premise represents an internal assumption?", options: ["Government tax policy", "Company sales forecast", "Global inflation rate", "Competitor product launch"], correct: 1 },
+                    { prompt: "The basic purpose or reason for an organization's existence in society is expressed in its:", options: ["Rulebook", "Mission statement", "Budget", "Operating manual"], correct: 1 },
+                    { prompt: "Standard Operating Procedures (SOPs) are classified as:", options: ["Single-use budgets", "Procedures", "Strategic visions", "Rules"], correct: 1 },
+                    { prompt: "A plan created for a single, major non-recurring undertaking (e.g., building a factory) is a:", options: ["Policy", "Program", "Rule", "Mission"], correct: 1 },
+                    { prompt: "Long-term objectives usually cover a timeframe of:", options: ["1 to 3 months", "5 to 10 years or more", "1 week", "Under 6 months"], correct: 1 },
+                    { prompt: "MBO emphasizes measuring employee performance based on:", options: ["Hours spent at desk", "Achieved results against agreed objectives", "Personal popularity", "Subjective impressions"], correct: 1 },
+                    { prompt: "A limitation of MBO is that it can lead to excessive:", options: ["Paperwork and goal-setting time consumption", "Workforce freedom", "Long-term planning focus", "De-centralized chaos"], correct: 0 },
+                    { prompt: "Externally imposed policies originate from:", options: ["Top corporate directors", "Government regulations, trade unions, or industry bodies", "Junior clerks", "Customer suggestions"], correct: 1 },
+                    { prompt: "A decision made by a plant manager regarding weekly shift allocation is an example of an:", options: ["Operational decision", "Strategic corporate decision", "External policy", "Unstructured venture"], correct: 0 },
+                    { prompt: "Decisions that affect the long-term direction and survival of the firm are termed:", options: ["Tactical decisions", "Strategic decisions", "Routine decisions", "Programmed decisions"], correct: 1 },
+                    { prompt: "A potential drawback of group decision-making is:", options: ["Lack of information", "Groupthink and time-consuming deliberations", "Single individual dominance", "Zero accountability"], correct: 1 },
+                    { prompt: "The scalar chain principle states that authority and responsibility should flow:", options: ["Horizontally across departments only", "In a clear, unbroken line from top management down to lowest levels", "Randomly across project teams", "Bottom-up exclusively"], correct: 1 },
+                    { prompt: "Under functional departmentation, a major disadvantage is:", options: ["Lack of technical specialization", "Inter-departmental friction and functional silos", "High operational flexibility", "Duplicate functional roles"], correct: 1 },
+                    { prompt: "Territorial organizational structures group activities based on:", options: ["Product lines", "Geographic locations or market zones", "Customer demographics", "Technical skills"], correct: 1 }
+                ]
             },
             {
-                prompt: "Which skill is most critical at the lower (supervisory) level of management?",
-                options: ["Conceptual skills", "Human skills", "Technical skills", "Strategic skills"],
-                correct: 2
+                setId: 6,
+                title: "Set 6: Delegation, Design & Kaizen",
+                questions: [
+                    { prompt: "In delegation, which component CANNOT be passed entirely onto subordinates?", options: ["Authority", "Ultimate accountability of the superior", "Task responsibility", "Daily duties"], correct: 1 },
+                    { prompt: "The principle of parity of authority and responsibility states that:", options: ["Authority should exceed responsibility", "Responsibility assigned should equal authority granted", "Responsibility should exceed authority", "Neither authority nor responsibility is needed"], correct: 1 },
+                    { prompt: "Centralization refers to:", options: ["Systematic dispersal of authority to lower levels", "Concentration of decision-making authority at top levels", "Elimination of corporate executives", "Flat organizational structures"], correct: 1 },
+                    { prompt: "Advisory staff authority gives the staff member the right to:", options: ["Command line subordinates", "Offer recommendations that line managers may accept or reject", "Enforce financial sanctions", "Veto top executive decisions"], correct: 1 },
+                    { prompt: "Line managers often criticize staff specialists for being:", options: ["Too practical and floor-oriented", "Too theoretical, academic, and detached from realities", "Slow in analysis", "Lacking specialized education"], correct: 1 },
+                    { prompt: "Environmental uncertainty causes organizations to adopt:", options: ["More mechanistic and rigid structures", "More organic, flexible, and decentralized designs", "Taller hierarchical pyramids", "Strict centralized rules"], correct: 1 },
+                    { prompt: "Mass production technology (e.g., automobile assembly lines) aligns best with:", options: ["Organic structures", "Mechanistic structures with standardized procedures", "Informal social groups", "Matrix teams"], correct: 1 },
+                    { prompt: "Which of the following is a key feature of the formal organization?", options: ["Emotionally driven relationships", "Defined chart of roles, lines of authority, and official goals", "Unstructured gossip network", "Voluntary membership"], correct: 1 },
+                    { prompt: "Management's ideal attitude toward informal organization should be to:", options: ["Suppress and ban it immediately", "Recognize, understand, and integrate it with formal goals", "Ignore its existence", "Replace it with formal memos"], correct: 1 },
+                    { prompt: "Upward communication flows from:", options: ["Top executive to plant worker", "Subordinates to direct superiors", "Peer to peer at same level", "External agency to company"], correct: 1 },
+                    { prompt: "Downward communication is primarily used by management to:", options: ["Issue instructions, policies, and performance expectations", "Submit employee grievances", "Conduct informal chit-chat", "Provide union feedback"], correct: 0 },
+                    { prompt: "Horizontal (lateral) communication occurs between:", options: ["CEO and factory supervisor", "Managers or peers at the same hierarchical level", "Board of Directors and shareholders", "Supplier and buyer"], correct: 1 },
+                    { prompt: "A common physical barrier to effective communication is:", options: ["Linguistic jargon", "Loud environmental noise or distance separation", "Prejudice", "Organizational policy"], correct: 1 },
+                    { prompt: "Semantic barriers in communication arise from:", options: ["Bad phone lines", "Differences in language interpretation, jargon, or vague words", "Office geography", "Time zone differences"], correct: 1 },
+                    { prompt: "To overcome communication barriers, a manager should:", options: ["Use complex technical jargon", "Seek active feedback and practice attentive listening", "Avoid face-to-face contact", "Rely exclusively on written memos"], correct: 1 },
+                    { prompt: "The first step in the creative process is:", options: ["Illumination", "Problem awareness and idea generation", "Incubation", "Verification"], correct: 1 },
+                    { prompt: "Evaluating and testing a creative concept to ensure practical feasibility is:", options: ["Preparation", "Verification and application", "Illumination", "Subconscious incubation"], correct: 1 },
+                    { prompt: "Innovations that completely transform an industry standard are termed:", options: ["Incremental innovations", "Disruptive / Radical innovations", "Routine modifications", "Administrative guidelines"], correct: 1 },
+                    { prompt: "A key characteristic of an intrapreneur is:", options: ["Operating within an existing firm with corporate resource backing", "Starting an independent firm from scratch", "Avoiding all innovation", "Working as a government clerk"], correct: 0 },
+                    { prompt: "Japanese 'Kaizen' philosophy refers to:", options: ["Sudden radical restructuring", "Continuous, incremental process improvement", "Lifetime contract termination", "Individual bonus payment"], correct: 1 }
+                ]
             },
             {
-                prompt: "As a manager moves up the hierarchy from supervisory to top management, the need for which skill increases the most?",
-                options: ["Technical skills", "Conceptual skills", "Mechanical skills", "Accounting skills"],
-                correct: 1
+                setId: 7,
+                title: "Set 7: Classical Theories & Planning",
+                questions: [
+                    { prompt: "Japanese Quality Circles (QCs) consist of:", options: ["External auditing consultants", "Small groups of frontline workers who meet to solve quality problems", "Top-level board members", "Government inspectors"], correct: 1 },
+                    { prompt: "In American corporations, employee turnover is generally:", options: ["Near zero due to lifetime contracts", "Higher, with frequent market-based job movements", "Banned by labor laws", "Lower than in Japanese firms"], correct: 1 },
+                    { prompt: "Workplace diversity management programs focus on:", options: ["Enforcing uniform demographic hiring", "Creating an inclusive climate that leverages unique workforce talents", "Segmenting workers by age group", "Reducing employee benefits"], correct: 1 },
+                    { prompt: "Demographic factors contributing to workplace diversity include:", options: ["Increasing gender representation and age variation", "Computer processing speed", "Product packaging styles", "Office rental rates"], correct: 0 },
+                    { prompt: "Competitive benchmarking focuses on comparing an organization's metrics against:", options: ["Internal historical averages", "Direct industry competitors", "Unrelated non-profit firms", "Government tax targets"], correct: 1 },
+                    { prompt: "Functional (generic) benchmarking involves comparing operations against:", options: ["Direct local competitors only", "Best-in-class functions regardless of industry sector", "Past company performance", "Subsidiaries within the same group"], correct: 1 },
+                    { prompt: "A critical success factor in benchmarking implementation is:", options: ["Keeping benchmarking findings secret from staff", "Securing top management commitment and employee involvement", "Selecting only low-performing comparison firms", "Avoiding process change"], correct: 1 },
+                    { prompt: "Which classic management theorist formulated the 14 Principles of Management?", options: ["F.W. Taylor", "Henri Fayol", "Max Weber", "Elton Mayo"], correct: 1 },
+                    { prompt: "F.W. Taylor is best known as the father of:", options: ["Administrative Management", "Scientific Management", "Human Relations Movement", "Bureaucratic Theory"], correct: 1 },
+                    { prompt: "Max Weber's ideal organizational model based on formal rules and authority is called:", options: ["Matrix structure", "Bureaucracy", "Organic design", "Adhocracy"], correct: 1 },
+                    { prompt: "The Hawthorne Studies conducted by Elton Mayo highlighted the importance of:", options: ["Physical lighting only", "Social factors, group dynamics, and employee attitudes", "Financial piece rates", "Time-and-motion studies"], correct: 1 },
+                    { prompt: "Which principle of Fayol states that an employee should receive orders from ONE superior only?", options: ["Unity of direction", "Unity of command", "Scalar chain", "Esprit de corps"], correct: 1 },
+                    { prompt: "Fayol's principle 'Esprit de Corps' emphasizes:", options: ["Individual competition", "Team spirit and harmony among workers", "Centralized decision making", "Strict discipline and penalties"], correct: 1 },
+                    { prompt: "The scalar chain principle refers to:", options: ["The line of authority from highest executive to lowest level", "The pay grade system", "Supply chain logistics", "Product assembly sequence"], correct: 0 },
+                    { prompt: "A plan designed to meet specific non-recurring situations and discarded after use is a:", options: ["Standing plan", "Single-use plan", "Policy", "Rule"], correct: 1 },
+                    { prompt: "Which of the following is an example of a single-use plan?", options: ["Personnel policy", "Annual operational budget", "Safety rule", "Standard Operating Procedure"], correct: 1 },
+                    { prompt: "Corporate vision statements describe:", options: ["Detailed daily schedules", "What the organization aspires to become in the future", "Past quarterly earnings", "Standard employee conduct"], correct: 1 },
+                    { prompt: "Premising is an essential step in planning that involves:", options: ["Firing underperforming managers", "Establishing future internal and external environment assumptions", "Calculating weekly payroll", "Purchasing office supplies"], correct: 1 },
+                    { prompt: "SWOT analysis evaluates an organization's:", options: ["Strengths, Weaknesses, Opportunities, and Threats", "Sales, Wages, Overhead, and Taxes", "Strategy, Work, Operation, and Technology", "Structure, Workforce, Organization, and Targets"], correct: 0 },
+                    { prompt: "In SWOT analysis, Opportunities and Threats are factors derived from the:", options: ["Internal environment", "External environment", "Accounting audit", "Board of directors"], correct: 1 }
+                ]
             },
             {
-                prompt: "Which skill remains vital and equally important across all levels of management?",
-                options: ["Technical skills", "Human (Interpersonal) skills", "Financial skills", "IT skills"],
-                correct: 1
+                setId: 8,
+                title: "Set 8: Matrix, Power & Delegation",
+                questions: [
+                    { prompt: "In SWOT analysis, Strengths and Weaknesses reflect factors from the:", options: ["Internal organization", "External environment", "Competitors' actions", "Government agencies"], correct: 0 },
+                    { prompt: "The decision-making model assuming complete information, objective evaluation, and maximum payoff is the:", options: ["Classical / Rational model", "Administrative model", "Political model", "Intuitive model"], correct: 0 },
+                    { prompt: "Herbert Simon's Administrative Model assumes managers operate under:", options: ["Absolute rationality", "Bounded rationality and satisficing", "Complete future certainty", "Zero information constraints"], correct: 1 },
+                    { prompt: "Groupthink occurs when group members:", options: ["Encourage intense critical debate", "Strive for unanimity over realistic appraisal of alternatives", "Refuse to communicate", "Vote anonymously"], correct: 1 },
+                    { prompt: "A technique to encourage creative group decision-making without immediate criticism is:", options: ["Brainstorming", "Strict auditing", "Linear programming", "Directing"], correct: 0 },
+                    { prompt: "The Delphi technique collects expert consensus using:", options: ["Face-to-face heated debates", "Series of anonymous written questionnaires", "Public voting", "Arm-wrestling"], correct: 1 },
+                    { prompt: "Departmentation by Product/Service is preferred when:", options: ["A firm produces diverse, complex product lines requiring distinct focus", "The firm has only one standard product", "Operations are restricted to one small town", "Functional activities dominate"], correct: 0 },
+                    { prompt: "A Matrix organizational structure combines which two bases of departmentation?", options: ["Functional and Product/Project departmentation", "Territorial and Legal departmentation", "Customer and Supplier departmentation", "Simple and Bureaucratic"], correct: 0 },
+                    { prompt: "A primary challenge of Matrix structures is that they violate which classic principle?", options: ["Division of work", "Unity of command (dual reporting to functional and project managers)", "Scalar chain", "Span of control"], correct: 1 },
+                    { prompt: "Authority is defined as the:", options: ["Ability to force compliance through fear", "Legitimate rights inherent in a managerial position to give orders", "Personal popularity of a worker", "Informal influence"], correct: 1 },
+                    { prompt: "Power differs from authority in that power is the:", options: ["Legitimate position right", "Ability or capacity to influence decisions or behavior", "Legal written charter", "Board mandate"], correct: 1 },
+                    { prompt: "Responsibility is defined as the:", options: ["Right to issue commands", "Obligation to perform assigned tasks and activities", "Power to fire workers", "Freedom from accountability"], correct: 1 },
+                    { prompt: "Accountability means being:", options: ["Answerable for the outcome of assigned responsibilities", "Exempt from mistakes", "Delegated no work", "Promoted automatically"], correct: 0 },
+                    { prompt: "Over-delegation occurs when a manager:", options: ["Passes too much of their core workload to subordinates", "Refuses to delegate any work", "Monitors every single step", "Fails to assign tasks"], correct: 0 },
+                    { prompt: "Under-delegation occurs when a manager:", options: ["Hoards tasks and fails to assign sufficient work to capable staff", "Gives complete autonomy", "Delegates executive authority", "Retires early"], correct: 0 },
+                    { prompt: "Line authority flows in a:", options: ["Vertical chain from top to bottom", "Horizontal direction across departments", "Diagonal random flow", "Bottom-up flow"], correct: 0 },
+                    { prompt: "Staff members with functional authority can issue orders:", options: ["On all matters across the enterprise", "Only within their specified expert domain to specified line units", "To the Board of Directors", "To external customers"], correct: 1 },
+                    { prompt: "Which organizational variable represents a mechanistic design indicator?", options: ["High formalization and rigid rules", "Low formalization and high adaptability", "Decentralized decision making", "Informal communications"], correct: 0 },
+                    { prompt: "Which organizational variable represents an organic design indicator?", options: ["Cross-functional teams and decentralized authority", "Strict vertical hierarchy", "Fixed narrow job descriptions", "Centralized top command"], correct: 0 },
+                    { prompt: "The impact of information technology on modern organization design has been to:", options: ["Increase middle management layers", "Enable flatter structures, virtual teams, and faster cross-network communication", "Eliminate all remote work", "Force paper-based filing"], correct: 1 }
+                ]
             },
             {
-                prompt: "Management functions are broadly categorized into how many core activities?",
-                options: ["Three", "Five", "Seven", "Ten"],
-                correct: 1
+                setId: 9,
+                title: "Set 9: TQM, JIT & Benchmarking",
+                questions: [
+                    { prompt: "Diagonal communication involves interaction between:", options: ["A superior and direct subordinate", "Different levels across different functional departments", "Peers in the same unit", "Internal workers and external vendors"], correct: 1 },
+                    { prompt: "Filtering in communication occurs when a sender:", options: ["Translates a message accurately", "Intentionally manipulates information so it appears more favorable to the receiver", "Uses technical jargon", "Encodes a message in code"], correct: 1 },
+                    { prompt: "Selective perception as a communication barrier means:", options: ["Receivers selectively hear/see based on their needs, background, and expectations", "Senders send vague memos", "Noise distorts phone lines", "Messages are lost in mail"], correct: 0 },
+                    { prompt: "Empathy in communication requires the communicator to:", options: ["Impose their view on others", "Put themselves in the receiver's shoes to understand their perspective", "Speak loudly", "Use complex language"], correct: 1 },
+                    { prompt: "Active listening involves:", options: ["Preparing your response while the speaker talks", "Giving full attention, reflecting, and seeking clarification without interrupting", "Nodding continuously without hearing", "Multitasking during meetings"], correct: 1 },
+                    { prompt: "The incubation stage of creativity is characterized by:", options: ["Active logical drafting", "Subconscious processing of problem elements while away from the task", "Immediate public testing", "Brainstorming sessions"], correct: 1 },
+                    { prompt: "Innovation adoption within organizations often faces resistance due to:", options: ["Fear of the unknown, habit, and perceived threat to security", "Excessive financial resources", "Top management support", "Desire for change"], correct: 0 },
+                    { prompt: "Product innovation refers to:", options: ["Changing internal manufacturing equipment", "Developing new or significantly improved goods or services", "Revising employee attendance rules", "Changing corporate logos"], correct: 1 },
+                    { prompt: "Process innovation focuses on:", options: ["Creating new products for consumers", "Improving internal operational methods and delivery workflows", "Designing ad campaigns", "Changing stock tickers"], correct: 1 },
+                    { prompt: "An entrepreneur's primary motivation typically revolves around:", options: ["Maintaining steady routine status quo", "Autonomy, achievement, venture creation, and value capture", "Following corporate rules strictly", "Earning fixed monthly wages"], correct: 1 },
+                    { prompt: "Japanese 'Total Quality Management' (TQM) emphasizes:", options: ["Inspecting quality only at final output", "Customer satisfaction and continuous quality improvement embedded in every process", "Minimizing worker training", "Maximizing production scrap"], correct: 1 },
+                    { prompt: "Japanese 'Just-In-Time' (JIT) inventory systems aim to:", options: ["Maintain huge raw material warehouses", "Minimize inventory holding costs by receiving goods only as needed in production", "Delay customer shipments", "Increase storage costs"], correct: 1 },
+                    { prompt: "The 'Ringi' decision-making process in Japanese firms flows:", options: ["Strictly top-down", "Bottom-up through circulating informal proposal documents (Ringisho)", "From external unions", "Through legal courts"], correct: 1 },
+                    { prompt: "American performance management tends to emphasize:", options: ["Group consensus and seniority-based pay", "Individual performance metrics and merit-based pay", "Lifetime employment contracts", "Paternalistic housing benefits"], correct: 1 },
+                    { prompt: "The Indian management style is often characterized as a blend of:", options: ["Traditional family values, hierarchical respect, and modern professional practices", "Strict Japanese JIT and lifetime contracts", "Pure American individualist contracts exclusively", "Anarchic decentralized self-management"], correct: 0 },
+                    { prompt: "Workplace inclusion goes beyond diversity by ensuring that diverse employees:", options: ["Conform entirely to majority habits", "Feel valued, respected, supported, and fully engaged in decision-making", "Work in separate isolated units", "Receive higher base salaries"], correct: 1 },
+                    { prompt: "Internal benchmarking compares performance between:", options: ["Direct industry rivals", "Different departments, plants, or divisions within the same organization", "Global tech giants", "Government agencies"], correct: 1 },
+                    { prompt: "Strategic benchmarking looks at how top companies:", options: ["Manage daily shift rotas", "Compete and win by evaluating business strategies and market positioning", "Order office stationery", "File monthly tax returns"], correct: 1 },
+                    { prompt: "A key metric used in benchmarking operations could include:", options: ["Cycle time, defect rate, cost per unit, or customer satisfaction index", "Office wallpaper color", "Company building height", "Number of parking slots"], correct: 0 },
+                    { prompt: "Recalibration in benchmarking refers to:", options: ["Abandoning all performance targets", "Periodically updating benchmark targets based on updated data and trends", "Firing the benchmark team", "Stopping operational changes"], correct: 1 }
+                ]
             },
             {
-                prompt: "The function of management that involves establishing authority-responsibility relationships is:",
-                options: ["Planning", "Directing", "Organizing", "Controlling"],
-                correct: 2
-            },
-            {
-                prompt: "Controlling is often described as the 'Siamese twin' of which management function?",
-                options: ["Staffing", "Planning", "Directing", "Organizing"],
-                correct: 1
-            },
-            {
-                prompt: "Which group represents a major internal/external stakeholder to whom a business owes social responsibility?",
-                options: ["Customers", "Employees", "Shareholders", "All of the above"],
-                correct: 3
-            },
-            {
-                prompt: "Milton Friedman strongly argued that the primary responsibility of business is to:",
-                options: ["Solve societal poverty", "Maximize economic profits within legal rules", "Provide free healthcare", "Eliminate environmental risks"],
-                correct: 1
-            },
-            {
-                prompt: "Which environmental force consists of competitors, suppliers, laws, and customers?",
-                options: ["Indirect action environment", "Direct action environment", "Global macro environment", "Internal cultural environment"],
-                correct: 1
-            },
-            {
-                prompt: "Socio-cultural forces in the business environment include:",
-                options: ["GDP and interest rates", "Values, beliefs, customs, and demographic shifts", "Taxation policies", "Automation technology"],
-                correct: 1
-            },
-            {
-                prompt: "Planning is primarily concerned with:",
-                options: ["Evaluating past failures", "Looking ahead and outlining a future course of action", "Punishing non-performing workers", "Drafting annual tax files"],
-                correct: 1
-            },
-            {
-                prompt: "Strategic planning covers a time horizon of:",
-                options: ["1 to 3 months", "6 months", "5 to 10+ years", "Exactly 1 year"],
-                correct: 2
-            },
-            {
-                prompt: "Which plan allows ZERO operational discretion and strictly dictates what must or must not be done?",
-                options: ["Policy", "Procedure", "Rule", "Strategy"],
-                correct: 2
-            },
-            {
-                prompt: "Standing plans designed to guide managerial thinking and decision-making boundaries are called:",
-                options: ["Budgets", "Policies", "Programs", "Schedules"],
-                correct: 1
-            },
-            {
-                prompt: "Plans expressed in quantitative numerical or financial units are known as:",
-                options: ["Rules", "Budgets", "Missions", "Policies"],
-                correct: 1
+                setId: 10,
+                title: "Set 10: Leadership, Motivation & Control",
+                questions: [
+                    { prompt: "The classical function of 'Staffing' includes:", options: ["Manpower planning, recruitment, selection, training, and performance evaluation", "Machinery maintenance", "Financial auditing", "Product pricing"], correct: 0 },
+                    { prompt: "Leadership is best defined as the managerial ability to:", options: ["Coerce employees through threats", "Influence, guide, and motivate individuals toward organizational goals", "Process accounting entries", "Draft legal contracts"], correct: 1 },
+                    { prompt: "Autocratic leadership style is characterized by:", options: ["Centralized decision-making with little or no input from subordinates", "Complete freedom to subordinates", "Consensus group voting", "Delegated power"], correct: 0 },
+                    { prompt: "Democratic (Participative) leadership style involves:", options: ["Unilateral top decisions", "Encouraging subordinate participation in decision-making", "Zero manager guidance", "Strict punishment systems"], correct: 1 },
+                    { prompt: "Laissez-faire leadership style is characterized by:", options: ["Total manager control over tasks", "Giving complete freedom to subordinates to make decisions and organize work", "Daily micro-management", "Strict formal memos"], correct: 1 },
+                    { prompt: "Which theory of motivation categorizes human needs into a 5-tier hierarchy?", options: ["Herzberg's Two-Factor Theory", "Maslow's Hierarchy of Needs", "McGregor's Theory X & Theory Y", "Vroom's Expectancy Theory"], correct: 1 },
+                    { prompt: "According to Maslow, the highest level of human need is:", options: ["Safety needs", "Belongingness needs", "Self-actualization needs", "Esteem needs"], correct: 2 },
+                    { prompt: "McGregor's 'Theory X' assumes that workers are inherently:", options: ["Self-motivated, creative, and eager to take responsibility", "Lazy, dislike work, avoid responsibility, and require close supervision", "Highly ambitious", "Altruistic"], correct: 1 },
+                    { prompt: "McGregor's 'Theory Y' assumes that workers are inherently:", options: ["Lazy and passive", "Self-directed, motivated, and capable of taking responsibility", "Dishonest", "Averse to achievement"], correct: 1 },
+                    { prompt: "Herzberg's Two-Factor Theory divides motivation factors into:", options: ["Primary and secondary needs", "Hygiene factors (dissatisfiers) and Motivators (satisfiers)", "Theory X and Theory Y", "Internal and external factors"], correct: 1 },
+                    { prompt: "According to Herzberg, hygiene factors (like working conditions and salary):", options: ["Directly create deep job satisfaction", "Prevent job dissatisfaction when present, but do not necessarily motivate", "Are completely unimportant", "Are motivators"], correct: 1 },
+                    { prompt: "Control standards must be:", options: ["Vague and non-measurable", "Clear, measurable, realistic, and aligned with goals", "Kept secret from workers", "Changed daily"], correct: 1 },
+                    { prompt: "Management by Exception (MBE) principles suggest that managers should focus attention on:", options: ["Every routine operational detail", "Significant deviations or exceptional variances from standards", "Minor non-consequential events", "Filing forms"], correct: 1 },
+                    { prompt: "Feedforward control takes place:", options: ["After an activity is completed", "Before an operational activity begins, to prevent problems", "During the actual work execution", "At year-end audit"], correct: 1 },
+                    { prompt: "Concurrent control occurs:", options: ["Prior to input assembly", "While an operational activity is in progress", "Three months after project close", "During long-term planning"], correct: 1 },
+                    { prompt: "Feedback control takes place:", options: ["Before work begins", "After an operational activity has been completed", "Concurrently with execution", "During goal setting"], correct: 1 },
+                    { prompt: "The primary objective of corporate governance is to ensure:", options: ["Top executives get maximum bonuses", "Transparency, accountability, and fairness to all corporate stakeholders", "Competitors are bankrupted", "Zero tax payments"], correct: 1 },
+                    { prompt: "Corporate ethics deals with:", options: ["Maximizing profits by any means", "Moral principles and values guiding business behavior", "Strict technical specifications", "Marketing slogans"], correct: 1 },
+                    { prompt: "An organization chart visually displays:", options: ["Company financial balance sheets", "Formal structure, reporting lines, and functional divisions", "Product manufacturing steps", "Office floor seating layout"], correct: 1 },
+                    { prompt: "The ultimate purpose of effective management is to:", options: ["Generate unnecessary paperwork", "Achieve organizational goals efficiently and effectively through resource optimization", "Control workers tightly", "Maximize organizational size"], correct: 1 }
+                ]
             }
         ];
 
-        class QuizApplication {
+        class MultiSetQuizPlatform {
             constructor() {
+                this.currentSetIndex = 0;
                 this.currentQuestionIndex = 0;
-                this.userAnswers = {}; 
+                this.userAnswers = {}; // { questionIndex: selectedOptionIndex }
                 this.timerInterval = null;
                 this.secondsRemaining = 15 * 60;
+                this.renderSetHub();
             }
 
             switchView(viewId) {
@@ -316,15 +473,58 @@
                 window.scrollTo(0, 0);
             }
 
-            startQuiz() {
+            renderSetHub() {
+                const grid = document.getElementById('sets-grid');
+                grid.innerHTML = '';
+                document.getElementById('home-nav-btn').classList.add('hidden');
+
+                allSetsData.forEach((setObj, idx) => {
+                    const card = document.createElement('div');
+                    card.className = "bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition p-5 flex flex-col justify-between space-y-4 cursor-pointer group";
+                    card.onclick = () => this.startSet(idx);
+
+                    card.innerHTML = `
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="bg-indigo-50 text-indigo-700 text-xs font-bold px-2.5 py-1 rounded-full group-hover:bg-indigo-600 group-hover:text-white transition">Set ${setObj.setId}</span>
+                                <span class="text-xs text-slate-400 font-medium"><i class="fa-regular fa-clock mr-1"></i>15 Mins</span>
+                            </div>
+                            <h4 class="text-base font-bold text-slate-800 group-hover:text-indigo-600 transition leading-snug">${setObj.title}</h4>
+                            <p class="text-xs text-slate-500 mt-1">20 Multiple Choice Questions covering core managerial concepts.</p>
+                        </div>
+                        <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-indigo-600">
+                            <span>Launch Set</span>
+                            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+
+            goHome() {
+                clearInterval(this.timerInterval);
+                this.switchView('view-hub');
+                this.renderSetHub();
+            }
+
+            startSet(setIdx) {
+                this.currentSetIndex = setIdx;
                 this.currentQuestionIndex = 0;
                 this.userAnswers = {};
                 this.secondsRemaining = 15 * 60;
+
+                const currentSet = allSetsData[this.currentSetIndex];
+                document.getElementById('active-set-title').textContent = currentSet.title;
+                document.getElementById('home-nav-btn').classList.remove('hidden');
 
                 this.switchView('view-quiz');
                 this.renderQuestion();
                 this.renderPalette();
                 this.startTimer();
+            }
+
+            restartCurrentSet() {
+                this.startSet(this.currentSetIndex);
             }
 
             startTimer() {
@@ -351,8 +551,9 @@
             }
 
             renderQuestion() {
-                const q = questionBank[this.currentQuestionIndex];
-                const total = questionBank.length;
+                const currentSet = allSetsData[this.currentSetIndex];
+                const q = currentSet.questions[this.currentQuestionIndex];
+                const total = currentSet.questions.length;
 
                 document.getElementById('quiz-progress-text').textContent = `Question ${this.currentQuestionIndex + 1} of ${total}`;
                 document.getElementById('q-badge').textContent = `Question ${this.currentQuestionIndex + 1}`;
@@ -399,7 +600,8 @@
             }
 
             nextQuestion() {
-                if (this.currentQuestionIndex < questionBank.length - 1) {
+                const currentSet = allSetsData[this.currentSetIndex];
+                if (this.currentQuestionIndex < currentSet.questions.length - 1) {
                     this.currentQuestionIndex++;
                     this.renderQuestion();
                     this.renderPalette();
@@ -419,8 +621,9 @@
             renderPalette() {
                 const grid = document.getElementById('palette-grid');
                 grid.innerHTML = '';
+                const currentSet = allSetsData[this.currentSetIndex];
 
-                questionBank.forEach((q, idx) => {
+                currentSet.questions.forEach((q, idx) => {
                     const isCurrent = (idx === this.currentQuestionIndex);
                     const isAnswered = this.userAnswers.hasOwnProperty(idx);
 
@@ -442,97 +645,4 @@
 
             confirmSubmit() {
                 const answered = Object.keys(this.userAnswers).length;
-                const total = questionBank.length;
-                if (confirm(`You have answered ${answered} of ${total} questions. Are you sure you want to submit?`)) {
-                    this.finalizeQuiz();
-                }
-            }
-
-            finalizeQuiz() {
-                clearInterval(this.timerInterval);
-
-                let correctCount = 0;
-                questionBank.forEach((q, idx) => {
-                    if (this.userAnswers[idx] === q.correct) {
-                        correctCount++;
-                    }
-                });
-
-                const total = questionBank.length;
-                const pct = Math.round((correctCount / total) * 100);
-
-                document.getElementById('res-score').textContent = `${correctCount}/${total}`;
-                document.getElementById('res-pct').textContent = `${pct}%`;
-                document.getElementById('res-correct').textContent = correctCount;
-                document.getElementById('res-incorrect').textContent = total - correctCount;
-
-                // Render Answers & Correct Choice Breakdown Key
-                const reviewContainer = document.getElementById('answer-review-container');
-                reviewContainer.innerHTML = '';
-
-                const labels = ['A', 'B', 'C', 'D'];
-
-                questionBank.forEach((q, idx) => {
-                    const userSelected = this.userAnswers[idx];
-                    const isCorrect = userSelected === q.correct;
-                    const isUnanswered = userSelected === undefined;
-
-                    const card = document.createElement('div');
-                    card.className = `p-5 rounded-xl border ${
-                        isCorrect 
-                            ? 'bg-emerald-50/40 border-emerald-200' 
-                            : 'bg-rose-50/40 border-rose-200'
-                    } space-y-3`;
-
-                    let statusBadge = isCorrect 
-                        ? `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800"><i class="fa-solid fa-check mr-1"></i> Correct</span>`
-                        : (isUnanswered 
-                            ? `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-200 text-slate-700"><i class="fa-solid fa-minus mr-1"></i> Unanswered</span>`
-                            : `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-800"><i class="fa-solid fa-xmark mr-1"></i> Incorrect</span>`);
-
-                    let optionsHtml = q.options.map((opt, oIdx) => {
-                        let optStyle = "bg-white border-slate-200 text-slate-700";
-                        let optIcon = "";
-
-                        if (oIdx === q.correct) {
-                            optStyle = "bg-emerald-100 border-emerald-300 text-emerald-900 font-semibold";
-                            optIcon = `<span class="ml-auto text-xs font-bold text-emerald-700"><i class="fa-solid fa-circle-check"></i> Correct Answer</span>`;
-                        } else if (oIdx === userSelected && !isCorrect) {
-                            optStyle = "bg-rose-100 border-rose-300 text-rose-900 font-semibold";
-                            optIcon = `<span class="ml-auto text-xs font-bold text-rose-700"><i class="fa-solid fa-circle-xmark"></i> Your Choice</span>`;
-                        }
-
-                        return `
-                            <div class="p-3 rounded-lg border text-xs flex items-center gap-2 ${optStyle}">
-                                <span class="font-bold w-4">${labels[oIdx]}.</span>
-                                <span class="flex-1">${opt}</span>
-                                ${optIcon}
-                            </div>
-                        `;
-                    }).join('');
-
-                    card.innerHTML = `
-                        <div class="flex justify-between items-start gap-2">
-                            <h4 class="text-sm font-bold text-slate-800">Q${idx + 1}. ${q.prompt}</h4>
-                            ${statusBadge}
-                        </div>
-                        <div class="space-y-1.5 pt-1">
-                            ${optionsHtml}
-                        </div>
-                    `;
-
-                    reviewContainer.appendChild(card);
-                });
-
-                this.switchView('view-result');
-            }
-
-            restartQuiz() {
-                this.switchView('view-start');
-            }
-        }
-
-        const quizApp = new QuizApplication();
-    </script>
-</body>
-</html>
+                const total = allSetsData[this
